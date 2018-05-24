@@ -14,14 +14,19 @@ class Toggle extends React.Component {
         this.props.onToggle(this.state.on)
       },
     )
+  getStateAndHelpers = () => {
+    return {on: this.state.on, toggle: this.toggle};
+  }
   render() {
-    const {on} = this.state
     // We want to give rendering flexibility, so we'll be making
     // a change to our render prop component here.
     // You'll notice the children prop in the Usage component
     // is a function. 🐨 So you can replace this with a call this.props.children()
     // But you'll need to pass it an object with `on` and `toggle`.
-    return <Switch on={on} onClick={this.toggle} />
+
+      // children must have s Switch component
+      // This is just like Context, where we set up state and some helpers for child components
+    return this.props.children(this.getStateAndHelpers());
   }
 }
 
@@ -31,7 +36,8 @@ class Toggle extends React.Component {
 function Usage({
   onToggle = (...args) => console.log('onToggle', ...args),
 }) {
-  return (
+    // Children is a function that takes {on, toggle} as parameter
+    return (
     <Toggle onToggle={onToggle}>
       {({on, toggle}) => (
         <div>
@@ -39,7 +45,7 @@ function Usage({
           <Switch on={on} onClick={toggle} />
           <hr />
           <button aria-label="custom-button" onClick={toggle}>
-            {on ? 'on' : 'off'}
+            {on ? 'ON' : 'OFF'}
           </button>
         </div>
       )}

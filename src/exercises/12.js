@@ -22,7 +22,14 @@ class Toggle extends React.Component {
 }
 
 function withToggle(Component) {
-  return Component
+  function Wrapper(props) {
+    return <Toggle.Consumer>
+        {toggleContext => (
+            <Component toggle={toggleContext} {...props} />
+        )}
+    </Toggle.Consumer>
+  }
+  return Wrapper
   // The `withToggle` function is called a "Higher Order Component"
   // It's another way to share code and allows you to statically
   // create new components to render.
