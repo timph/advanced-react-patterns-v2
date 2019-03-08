@@ -4,8 +4,9 @@ import React from 'react'
 import {Switch} from '../switch'
 
 class Toggle extends React.Component {
-    static On = ({ on, children }) => on ? children : null;
-    static Off = ({ on, children }) => on ? null : children;
+    static On = ({ on, children }) => on ? children : null; // if 'on', show children
+    static Off = ({ on, children }) => on ? null : children; // if 'off', show children
+
     // Button is the most important thing with real action for toggling
     static Button = ({on, toggle, ...props}) => (
         <Switch on={on} onClick={toggle} {...props} />
